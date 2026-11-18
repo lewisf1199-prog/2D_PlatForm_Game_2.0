@@ -1020,6 +1020,10 @@ PrefabInstance:
       value: Moving Platform
       objectReference: {fileID: 0}
     - target: {fileID: 5591980644796951176, guid: 851b9149f0234574eb2158338fcc5fc0, type: 3}
+      propertyPath: speed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591980644796951176, guid: 851b9149f0234574eb2158338fcc5fc0, type: 3}
       propertyPath: startDelay
       value: 5
       objectReference: {fileID: 0}
