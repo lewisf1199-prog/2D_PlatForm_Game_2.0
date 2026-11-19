@@ -1,23 +1,23 @@
 using UnityEngine;
 
-public class ShootingEnemy : MonoBehaviour 
-
+public class ShootingEnemy : MonoBehaviour
 {
-    [Header("Refrrences")]
+    [Header("References")]
     public GameObject Bullet;
     public Transform firePoint;
     private Transform Player;
 
-    [Header("Refrrences")]
+    [Header("Combat Settings")]
     public float detectionRange = 8f;
     public float fireRate = 2f;
     private float nextFireTime = 0f;
 
-    void Start() 
+    void Start()
     {
         GameObject PlayerObj = GameObject.FindGameObjectWithTag("Player");
 
-        if (PlayerObj == null)
+        // Fixed: Changed == to != so it assigns Player when found
+        if (PlayerObj != null)
         {
             Player = PlayerObj.transform;
         }
@@ -34,6 +34,7 @@ public class ShootingEnemy : MonoBehaviour
             nextFireTime = Time.time + fireRate;
         }
     }
+
     void Shoot()
     {
         Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position;
@@ -42,10 +43,10 @@ public class ShootingEnemy : MonoBehaviour
 
         Vector2 direction = (Player.position - spawnPos).normalized;
         proj.GetComponent<BulletScript>().Launch(direction);
-        
     }
 
-    void OnDrawnGizmosSelected()
+    // Fixed typo: OnDrawnGizmosSelected -> OnDrawGizmosSelected
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRange);

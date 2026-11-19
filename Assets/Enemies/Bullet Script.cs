@@ -9,9 +9,14 @@ public class BulletScript : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    void Awake()
+    {
+        // Awake runs immediately upon Instantiate, before Launch() is called
+        rb = GetComponent<Rigidbody2D>();
+    }
+
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         Destroy(gameObject, lifetime);
     }
 
@@ -22,14 +27,13 @@ public class BulletScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-       if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
-
-       else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Destroy(gameObject);
         }
-    }       
+    }
 }
