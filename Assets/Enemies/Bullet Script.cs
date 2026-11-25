@@ -11,7 +11,6 @@ public class BulletScript : MonoBehaviour
 
     void Awake()
     {
-        // Awake runs immediately upon Instantiate, before Launch() is called
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -29,6 +28,7 @@ public class BulletScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            collision.GetComponent<PlayerRespawn>()?.Respawn();
             Destroy(gameObject);
         }
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))

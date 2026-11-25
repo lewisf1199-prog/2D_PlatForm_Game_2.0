@@ -1,3 +1,4 @@
+using Unity.Collections;
 using UnityEngine;
 
 public class ShootingEnemy : MonoBehaviour
@@ -10,6 +11,7 @@ public class ShootingEnemy : MonoBehaviour
     [Header("Combat Settings")]
     public float detectionRange = 8f;
     public float fireRate = 2f;
+    public float bounceForce = 8f;
     private float nextFireTime = 0f;
 
     void Start()
@@ -45,7 +47,27 @@ public class ShootingEnemy : MonoBehaviour
         proj.GetComponent<BulletScript>().Launch(direction);
     }
 
-    // Fixed typo: OnDrawnGizmosSelected -> OnDrawGizmosSelected
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                if (contact.normal.y < -0.5f)
+                {
+                    Rigidbody2D playerRb = collision.gameObject.GetComponent<Rigidbody2D>();
+                    if (playerRb != null)
+                    {
+                        playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, bounceForce);
+                    }
+
+                    Destroy(gameObject);
+                    return;
+                }
+            }
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
